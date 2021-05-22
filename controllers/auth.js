@@ -1,12 +1,14 @@
 const User = require('../models/User');
-// const Passport = require('../passport/passport');
 
 const signup = async (req, res, next) => {
-    console.log();
-    let username = req.body.username;
+    let firstname = req.body.firstname; // UI of postman
+    let lastname = req.body.lastname;
     let password = req.body.password;
 
-    const user = new User({username: username});
+    const user = new User({
+        firstname: firstname,
+        lastname: lastname
+    });
     await user.setPassword(password);
     await user.save().then(result => {
         res.json({
@@ -19,21 +21,21 @@ const signup = async (req, res, next) => {
     });
 };
 
-const login = async (req, res, next)=>{
-    const user = await User.authenticate()(req.body.username, req.body.password).then(result =>{
+const login = async (req, res, next) => {
+    const user = await User.authenticate()(req.body.firstname, req.body.lastname, req.body.password).then(result => {
         res.json({
             "status": "success",
-            "data":{
-                "user":result
+            "data": {
+                "user": result
             }
         })
-    }).catch(error =>{
+    }).catch(error => {
         res.json({
             "status": "error",
             "message": error
         })
     });
-}
+};
 
 module.exports.signup = signup;
 module.exports.login = login;
