@@ -1,11 +1,13 @@
 const User = require('../models/User');
 
 const signup = async (req, res, next) => {
-    let username = req.body.username; // UI of postman
+    let firstname = req.body.firstname; // UI of postman
+    let lastname = req.body.lastname;
     let password = req.body.password;
 
     const user = new User({
-        username: username
+        firstname: firstname,
+        lastname: lastname
     });
     await user.setPassword(password);
     await user.save().then(result => {
@@ -20,7 +22,7 @@ const signup = async (req, res, next) => {
 };
 
 const login = async (req, res, next) => {
-    const user = await User.authenticate()(req.body.username, req.body.password).then(result => {
+    const user = await User.authenticate()(req.body.firstname, req.body.lastname, req.body.password).then(result => {
         res.json({
             "status": "success",
             "data": {
