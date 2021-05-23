@@ -8,7 +8,7 @@ const getAll = (req, res) => {
             res.json({
                 "status": "success",
                 "data": {
-                    "todos": docs
+                    "transfers": docs
                 }
             });
         }
