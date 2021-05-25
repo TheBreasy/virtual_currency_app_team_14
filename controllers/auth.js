@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const signup = async (req, res, next) => {
     let username = req.body.username; // UI of postman
     let password = req.body.password;
+    let nickname = req.body.nickname;
     let firstname = req.body.firstname;
     let lastname = req.body.lastname;
     let coins = 100;
@@ -11,6 +12,7 @@ const signup = async (req, res, next) => {
     if(username.includes("@student.thomasmore.be")) {
         const user = new User({
             username: username,
+            nickname: nickname,
             firstname: firstname,
             lastname: lastname,
             coins: coins
@@ -22,6 +24,7 @@ const signup = async (req, res, next) => {
 
             let token = jwt.sign({
                 uid: result._id,
+                nickname: result.nickname,
                 username: result.username,
                 firstname: result.firstname,
                 lastname: result.lastname

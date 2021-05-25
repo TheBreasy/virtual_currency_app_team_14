@@ -32,6 +32,7 @@ const getUserById = (req, res) => {
                 "status": "success",
                 "id": id,
                 "username": docs.username,
+                "nickname": docs.nickname,
                 "firstname": docs.firstname,
                 "lastname": docs.lastname,
                 "coins": docs.coins
