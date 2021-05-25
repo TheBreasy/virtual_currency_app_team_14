@@ -20,6 +20,7 @@ const create = (req, res) => {
     transfer.sender = req.user._id;
     transfer.recipient = req.body.recipient;
     transfer.amount = req.body.amount;
+    transfer.reason = req.body.reason;
     transfer.message = req.body.message;
     transfer.save((err, doc) => {
         if(err) {
