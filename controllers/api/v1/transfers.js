@@ -1,9 +1,7 @@
 const Transfer = require('../../../models/Transfer');
 
 const getAll = (req, res) => {
-    Transfer.find({
-        "sender": req.user._id
-    }, (err, docs) => {
+    Transfer.find((err, docs) => {
         if(!err) {
             res.json({
                 "status": "success",
