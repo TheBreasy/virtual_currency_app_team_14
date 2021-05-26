@@ -58,13 +58,13 @@ const login = async (req, res, next) => {
 
         let token = jwt.sign({
             uid: result.user._id,
-            username: result.user.username
+            username: result.user.username,
         }, "MyVerySecretWord");
         return res.json({
             "status": "success",
             "data": {
                 "token": token,
-                "id": result.user._id
+                "id": result.user._id,
             }
         })
     }).catch(error => {

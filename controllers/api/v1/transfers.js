@@ -1,4 +1,5 @@
 const Transfer = require('../../../models/Transfer');
+const User = require('../../../models/User');
 
 const getAll = (req, res) => {
     Transfer.find((err, docs) => {
@@ -7,6 +8,9 @@ const getAll = (req, res) => {
                 "status": "success",
                 "data": {
                     "transfers": docs
+                },
+                "user": {
+                    "nickname": req.user.nickname
                 }
             });
         }
@@ -14,8 +18,9 @@ const getAll = (req, res) => {
 }
 
 const create = (req, res) => {
+    let senderUsername = req.user.nickname;
     let transfer = new Transfer();
-    transfer.sender = req.user._id;
+    transfer.sender = senderUsername;
     transfer.recipient = req.body.recipient;
     transfer.amount = req.body.amount;
     transfer.reason = req.body.reason;
