@@ -1,8 +1,8 @@
 const Transfer = require('../../../models/Transfer');
 const User = require('../../../models/User');
 
-const getAll = (req, res) => {
-    Transfer.find((err, docs) => {
+const getAllByNickname = (req, res) => {
+    Transfer.find({$or:[{"sender": req.user.nickname}, {"recipient": req.user.nickname}]}, (err, docs) => {
         if(!err) {
             res.json({
                 "status": "success",
@@ -43,5 +43,24 @@ const create = (req, res) => {
     });
 }
 
-module.exports.getAll = getAll;
-module.exports.create = create;
+const getTransferById = (req, res) => {
+    let id = req.params.id;
+    Transfer.findById(id, (err, docs) => {
+        if(err) {
+            res.json({
+                "status": "error",
+                "message": "Couldn't get transfer by id"
+            })
+        }
+        if(!err) {
+            res.json({
+                "status": "success",
+                "transfer": docs
+            })
+        }
+    });
+}
+
+module.exports.getAllByNickname = getAllByNickname;
+module.exports.create = create
+module.exports.getTransferById = getTransferById;
