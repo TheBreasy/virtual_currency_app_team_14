@@ -17,7 +17,7 @@ const getAllByNickname = (req, res) => {
     });
 }
 
-const create = (req, res) => {
+const create = async (req, res) => {
     let senderUsername = req.user.nickname;
     let transfer = new Transfer();
     transfer.sender = senderUsername;
@@ -25,22 +25,42 @@ const create = (req, res) => {
     transfer.amount = req.body.amount;
     transfer.reason = req.body.reason;
     transfer.message = req.body.message;
-    transfer.save((err, doc) => {
-        if(err) {
-            res.json({
-                "status": "error",
-                "message": "Could not save this transfer"
-            });
-        }
-       if(!err) {
-           res.json({
-               "status": "success",
-               "data": {
-                   "transfer": doc
-               }
-           });
-       }
-    });
+
+    let getRecipientByNickname = await User.findOne({nickname: req.body.recipient});
+    let recipientUsername = getRecipientByNickname['nickname'];
+    let senderCoins = req.user.coins;
+    let recipientCoins = getRecipientByNickname.coins;
+
+    if(req.user.coins>=req.body.amount) {
+        updateCoins(recipientUsername, recipientCoins+req.body.amount);
+        updateCoins(senderUsername, senderCoins-req.body.amount);
+
+        transfer.save((err, doc) => {
+            if(err) {
+                res.json({
+                    "status": "error",
+                    "message": "Could not save this transfer"
+                });
+            }
+            if(!err) {
+                res.json({
+                    "status": "success",
+                    "data": {
+                        "transfer": doc
+                    }
+                });
+            }
+        })
+    } else {
+        return res.json({
+            "status": "error",
+            "message": "You don't have enough coins"
+        })
+    }
+}
+
+const updateCoins = (nickname, amount) => {
+    User.findOneAndUpdate({"nickname": nickname}, {$set: {"coins": amount}}, {returnNewDocument: true, useFindAndModify: false}, (err, docs) => {})
 }
 
 const getTransferById = (req, res) => {
