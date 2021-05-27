@@ -4,22 +4,23 @@
  * Module dependencies.
  */
 
-let app = require('../app');
-let debug = require('debug')('virtual-currency-app-team-14:server');
-let http = require('http');
+const app = require('../app');
+const debug = require('debug')('virtual-currency-app-team-14:server');
+const http = require('http');
 
 /**
  * Get port from environment and store in Express.
  */
 
-let port = normalizePort(process.env.PORT || '3000');
+const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**
  * Create HTTP server.
  */
 
-let server = http.createServer(app);
+const server = http.createServer(app);
+const primus = require('../primus/primus').go(server);
 
 /**
  * Listen on provided port, on all network interfaces.

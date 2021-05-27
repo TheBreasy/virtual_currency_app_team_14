@@ -1,0 +1,8 @@
+{
+  "Database": {
+    "conn": "mongodb+srv://breasy:bp0IQNPsl3ZR5Bjo@cluster0.zgyix.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+  },
+  "jwt": {
+    "secret": "MyVerySecretWord"
+  }
+}
