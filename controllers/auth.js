@@ -60,7 +60,7 @@ const login = async (req, res, next) => {
         if(!result.user) {
             return res.json({
                 "status": "failed",
-                "message": "Login failed"
+                "message": "Login failed, make sure your login details are correct."
             });
         }
 
