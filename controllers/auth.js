@@ -40,11 +40,15 @@ const signup = async (req, res, next) => {
             })
         }).catch(error => {
             res.json({
-                "status": "error"
+                "status": "error",
+                "message": error
             })
         });
     } else {
-        throw "email must include @student.thomasmore.be";
+        res.json({
+            "status": "error",
+            "message": "email must include @student.thomasmore.be"
+        })
     }
 
 };
