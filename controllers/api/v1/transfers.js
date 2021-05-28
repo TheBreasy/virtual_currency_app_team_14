@@ -46,7 +46,7 @@ const create = async (req, res) => {
                 res.json({
                     "status": "success",
                     "data": {
-                        "transfer": doc
+                        "transfers": doc
                     }
                 });
             }
