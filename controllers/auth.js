@@ -49,7 +49,7 @@ const signup = async (req, res, next) => {
     } else {
         res.json({
             "status": "error",
-            "message": "email must include @student.thomasmore.be"
+            "message": "You must have a Thomas More e-mail address."
         })
     }
 
